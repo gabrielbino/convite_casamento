@@ -10,13 +10,7 @@ interface GuestEntry {
 
 export default function AdminPanel() {
   const [guests, setGuests] = useState<GuestEntry[]>([]);
-  // const [status, setStatus] = useState('');
-
-  // const handleCorrigir = async () => {
-  //   const resultado = await corrigirGiftId();
-  //   setStatus(resultado);
-  // };
-
+  
   useEffect(() => {
     const q = query(collection(db, 'guests'), orderBy('timestamp', 'desc'));
     const unsubscribe = onSnapshot(q, (snapshot) => {

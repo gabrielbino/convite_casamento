@@ -27,7 +27,7 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
   
       const updatedTaken = snapshot.docs
         .map(doc => doc.data())
-        .filter(data => data.giftId !== undefined && data.giftId !== null) // Agora usamos o giftId!
+        .filter(data => data.giftId !== undefined && data.giftId !== null)
         .map(data => data.giftId);
   
       const updated = gifts.map(gift => ({
@@ -58,8 +58,8 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
       <Header
         groom="Daniel"
         bride="Kristielly"
-        date="2025-05-24"
-        location="Rua Presidente Tancredo Almeida Neves, 1 - Vista da Penha, Vila Velha"
+        date="2025-06-07"
+        location="Chácara Timoneiro, Serra"
         onAdminClick={handleAdminAccess}
         isPasswordVisible={isPasswordVisible}
         password={password}

@@ -58,7 +58,7 @@ export default function Countdown() {
         </div>
       </div>
 
-      <p className="text-sm mt-2 text-[#354B25]">para o nosso chá de panela!</p>
+      <p className="text-sm mt-2 text-[#354B25]">para o grande dia!</p>
     </div>
   );
 }
