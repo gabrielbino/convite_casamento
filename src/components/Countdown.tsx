@@ -24,7 +24,7 @@ const calculateTimeLeft = (targetDate: Date): TimeLeft => {
 };
 
 export default function Countdown() {
-  const targetDate = useMemo(() => new Date('2025-05-24T00:00:00-03:00'), []);
+  const targetDate = useMemo(() => new Date('2025-06-07T00:00:00-03:00'), []);
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft(targetDate));
 
