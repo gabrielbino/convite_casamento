@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { Gift, Guest } from '../types';
 import { saveGuest } from '../services/firebaseGuestsService.ts';
 import AlertBox from './AlertBox.tsx';
+import { useIsAdmin } from '../hooks/useIsAdmin.ts';
 
 interface GiftListProps {
   guest: Guest | null;
   gifts: Gift[];
   setGifts: (gifts: Gift[]) => void;
-  isAdmin: boolean;
 }
 
-export default function GiftList({ guest, gifts, setGifts, isAdmin }: GiftListProps) {
+export default function GiftList({ guest, gifts, setGifts }: GiftListProps) {
   const [selectedGiftId, setSelectedGiftId] = useState<number | null>(null);
   const [name, setName] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' | 'warning' } | null>(null);
+  const isAdmin = useIsAdmin();
 
   const handleGiftConfirm = async () => {
     const userName = guest?.name || name;
@@ -28,7 +29,7 @@ export default function GiftList({ guest, gifts, setGifts, isAdmin }: GiftListPr
   
     if (selectedGift) {
       try {
-        await saveGuest(userName, false, selectedGift.name, selectedGift.id, selectedGift.allowMultiple);
+        await saveGuest(userName, false, selectedGift.name, selectedGift.id, 1, 0, selectedGift.allowMultiple);
         setAlert({ message: 'Presente registrado com sucesso!', type: 'success' });
   
         setTimeout(() => {
@@ -52,9 +53,9 @@ export default function GiftList({ guest, gifts, setGifts, isAdmin }: GiftListPr
   
 
   return (
-    <section className="mt-12 text-center">
-      <h2 className="text-2xl font-semibold mb-4 text-[#354B25]">Lista de Presentes</h2>
-
+      
+    <section className="space-y-6 mt-12 text-center relative">
+      <h2 className="text-2xl md:text-3xl font-serif tracking-wide mb-8 text-[#354B25]">LISTA DE PRESENTES</h2>
       <ul className="space-y-4">
         {gifts.map(gift => (
           <li

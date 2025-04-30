@@ -1,72 +1,39 @@
-import React, { useState } from 'react';
-import Countdown from './Countdown.tsx';
+import React, { useEffect, useState } from 'react';
 
 interface HeaderProps {
   bride: string;
   groom: string;
   date: string;
   location: string;
-  onAdminClick: () => void;
-  isPasswordVisible: boolean;
-  password: string;
-  setPassword: (password: string) => void;
 }
 
 export default function Header({
   bride,
-  groom,
-  date,
-  location,
-  onAdminClick,
-  password,
-  setPassword,
+  groom
 }: HeaderProps) {
-  const [showInput, setShowInput] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 640);
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+  }, []);
 
   return (
     <header
-      className="text-white py-6 px-4 rounded-b-xl relative bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: 'url(/fundo-cha.jpeg)' }}
+      className="relative min-h-[60vh] sm:min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-center justify-center sm:justify-start px-4 sm:px-12 text-white rounded-b-xl"
+      style={{ backgroundImage: `url(${isMobile ? '/mobile.jpg' : '/desktop.jpg'})` }}
     >
-      <div className="absolute right-4 top-4">
-        {!showInput ? (
-          <button
-            onClick={() => setShowInput(true)}
-            className="bg-[#426221] hover:bg-[#6CBD46] text-white text-sm px-4 py-1 rounded shadow transition"
-          >
-            Entrar como admin
-          </button>
-        ) : (
-          <div className="flex gap-2 items-center">
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="border border-[#6CBD46] text-black rounded px-2 py-1 text-sm"
-            />
-            <button
-              onClick={onAdminClick}
-              className="bg-[#5B8C3C] hover:bg-[#6CBD46] text-white text-sm px-3 py-1 rounded shadow transition"
-            >
-              Entrar
-            </button>
-          </div>
-        )}
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-0" />
 
-      <div className="text-center mt-6">
-        <h2 className="text-3xl font-bold drop-shadow-sm text-[#426221]"> 
-          Casamento de
-        </h2>
-        <h1 className="text-3xl font-bold italic drop-shadow-sm text-[#354B25]"
-        style={{ fontFamily: 'Literaturnaya, serif' }}>
+      <div className="relative z-10 text-center sm:text-left max-w-[90%] sm:max-w-[40%]">
+        <h1
+          className="text-4xl sm:text-5xl font-bold italic drop-shadow-lg text-[#F3FDE8]"
+          style={{ fontFamily: 'Literaturnaya, serif' }}
+        >
           {groom} & {bride}
         </h1>
-        <p className="font-medium text-[#6CBD46] mt-1">
-          {location} - {new Date(date + 'T00:00:00-03:00').toLocaleDateString('pt-BR')} às 16:00h
-        </p>
-        <Countdown />
       </div>
     </header>
   );

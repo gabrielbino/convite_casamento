@@ -25,7 +25,6 @@ const calculateTimeLeft = (targetDate: Date): TimeLeft => {
 
 export default function Countdown() {
   const targetDate = useMemo(() => new Date('2025-06-07T00:00:00-03:00'), []);
-
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft(targetDate));
 
   useEffect(() => {
@@ -36,29 +35,29 @@ export default function Countdown() {
   }, []);
 
   return (
-    <div className="mt-6 text-center">
-      <p className="text-sm text-[#354B25]">Faltam</p>
+    <section className="bg-[#9CB983] py-12 px-4 text-white text-center">
+      <h2 className="text-2xl md:text-3xl font-serif tracking-wide mb-8">
+        CONTAGEM REGRESSIVA
+      </h2>
 
-      <div className="flex justify-center gap-6 text-2xl font-bold text-[#426221]">
-        <div className="flex flex-col items-center animate-pulse">
-          <span>{timeLeft.days}</span>
-          <span className="text-xs font-medium text-[#9CB983]">dias</span>
-        </div>
-        <div className="flex flex-col items-center animate-pulse">
-          <span>{timeLeft.hours}</span>
-          <span className="text-xs font-medium text-[#9CB983]">horas</span>
-        </div>
-        <div className="flex flex-col items-center animate-pulse">
-          <span>{timeLeft.minutes}</span>
-          <span className="text-xs font-medium text-[#9CB983]">min</span>
-        </div>
-        <div className="flex flex-col items-center animate-pulse">
-          <span>{timeLeft.seconds}</span>
-          <span className="text-xs font-medium text-[#9CB983]">seg</span>
-        </div>
+      <div className="flex flex-nowrap overflow-x-auto justify-center gap-3 sm:gap-6 text-[#9CB983] font-bold text-3xl">
+        {[
+          { label: 'DIAS', value: timeLeft.days },
+          { label: 'HORAS', value: timeLeft.hours },
+          { label: 'MINUTOS', value: timeLeft.minutes },
+          { label: 'SEGUNDOS', value: timeLeft.seconds },
+        ].map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-md w-24 h-24 flex flex-col justify-center items-center shadow-md"
+          >
+            <span>{item.value.toString().padStart(2, '0')}</span>
+            <span className="text-xs font-bold mt-1 text-[#9CB983]">
+              {item.label}
+            </span>
+          </div>
+        ))}
       </div>
-
-      <p className="text-sm mt-2 text-[#354B25]">para o grande dia!</p>
-    </div>
+    </section>
   );
 }

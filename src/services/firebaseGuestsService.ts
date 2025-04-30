@@ -7,47 +7,44 @@ export async function saveGuest(
   confirmed: boolean,
   giftName?: string,
   giftId?: number,
+  adults: number = 1,
+  children: number = 0,
   allowMultiple?: boolean
 ): Promise<void> {
   try {
     const normalizedId = normalizeName(name);
     const guestsRef = collection(db, 'guests');
 
-    // Se a pessoa está escolhendo presente
     if (giftId !== undefined && !allowMultiple) {
-      // Verificar se já existe alguém com esse giftId
-      const q = query(guestsRef, where('giftId', '==', giftId));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
+      const giftQuery = query(guestsRef, where('giftId', '==', giftId));
+      const giftSnapshot = await getDocs(giftQuery);
+      if (!giftSnapshot.empty) {
         throw new Error('Este presente já foi escolhido por outro convidado.');
       }
     }
 
-    const existingSnapshot = await getDocs(query(guestsRef, where('normalizedName', '==', normalizedId)));
+    const existingQuery = query(guestsRef, where('normalizedName', '==', normalizedId));
+    const existingSnapshot = await getDocs(existingQuery);
+
+    const payload = {
+      name,
+      normalizedName: normalizedId,
+      confirmed,
+      gift: giftName || null,
+      giftId: giftId || null,
+      adults,
+      children,
+      timestamp: new Date()
+    };
 
     if (!existingSnapshot.empty) {
       const existingDoc = existingSnapshot.docs[0];
-      await updateDoc(doc(db, 'guests', existingDoc.id), {
-        confirmed: true,
-        gift: giftName ?? existingDoc.data().gift ?? null,
-        giftId: giftId ?? existingDoc.data().giftId ?? null,
-        timestamp: new Date(),
-      });
+      await updateDoc(doc(db, 'guests', existingDoc.id), payload);
     } else {
-      await addDoc(guestsRef, {
-        name,
-        normalizedName: normalizedId,
-        confirmed,
-        gift: giftName || null,
-        giftId: giftId || null,
-        timestamp: new Date(),
-      });
+      await addDoc(guestsRef, payload);
     }
-
-    console.log('Convidado salvo com sucesso.');
   } catch (error) {
     console.error('Erro ao salvar convidado:', error);
-    throw error; // Importante lançar o erro para o componente capturar
+    throw error;
   }
 }

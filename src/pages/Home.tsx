@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Guest, Gift } from '../types';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../services/firebaseService.ts';
+
 import Header from '../components/Header.tsx';
 import PresenceForm from '../components/PresenceForm.tsx';
 import GiftList from '../components/GiftList.tsx';
 import PixSection from '../components/PixSection.tsx';
-import { Guest, Gift } from '../types';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../services/firebaseService.ts';
+import Countdown from '../components/Countdown.tsx';
+import Location from '../components/Location.tsx';
+import Navbar from '../components/Navbar.tsx';
+import Footer from '../components/Footer.tsx';
 
 interface HomeProps {
   guests: Guest[];
@@ -16,10 +21,8 @@ interface HomeProps {
 }
 
 export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) {
-  const navigate = useNavigate();
   const [guest, setGuest] = useState<Guest | null>(null);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGifts = async () => {
@@ -43,38 +46,51 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
   
     fetchGifts();
   }, [gifts, setGifts]);
-  
 
-  const handleAdminAccess = () => {
-    if (password === process.env.REACT_APP_ADMIN_PASSWORD) {
-      navigate('/admin');
-    } else {
-      alert('Senha incorreta');
-    }
-  };
-  
+  const previewGifts = gifts.slice(0, 6);
+    
   return (
-    <div>
+    <div id="home">
+      <Navbar />
+
       <Header
         groom="Daniel"
         bride="Kristielly"
         date="2025-06-07"
         location="Chácara Timoneiro, Serra"
-        onAdminClick={handleAdminAccess}
-        isPasswordVisible={isPasswordVisible}
-        password={password}
-        setPassword={setPassword}
       />
 
-      <PixSection pixKey="27992342095" />
+      <section className="bg-white text-center py-8 px-4">
+        <p className="max-w-2xl mx-auto text-[#354B25] text-lg">
+          Este site foi feito com carinho para compartilharmos com vocês cada detalhe do nosso grande dia. Estamos muito felizes e contamos com a presença de todos no nosso grande dia!
+        </p>
+      </section>
 
-      <div className="max-w-2xl mx-auto p-4">
-        <GiftList
-          guest={guest}
-          gifts={gifts}
-          setGifts={setGifts}
-          isAdmin={false}
-        />
+      <Countdown />
+
+      <Location />
+
+      <div id="gifts" className="max-w-2xl mx-auto p-3">
+        
+        <PixSection pixKey="27992342095" />
+
+        <section className="mt-4 text-center relative">          
+          <div className="overflow-hidden relative max-h-[600px]">
+            <div className="blur-md absolute bottom-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+            <GiftList
+              guest={guest}
+              gifts={previewGifts}
+              setGifts={setGifts}
+            />
+          </div>
+
+          <button
+            onClick={() => navigate('/gifts')}
+            className="mt-6 bg-[#426221] hover:bg-[#6CBD46] text-white font-semibold px-6 py-2 rounded transition z-20 relative"
+          >
+            Ver lista completa
+          </button>
+        </section>
 
         <PresenceForm onSubmit={(name) => {
           const newGuest = { name };
@@ -82,6 +98,8 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
           setGuest(newGuest);
         }} />
       </div>
+
+      <Footer />
     </div>
   );
 }
