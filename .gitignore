@@ -9,12 +9,8 @@ node_modules/
 # === Firebase ===
 .firebase/
 firestore-debug.log
-firestore.indexes.json
-firestore.rules
-*.firebase/
 firebase-debug.log
 firebase-debug.*.log
-firebase.json.backup
 firebase-export/
 storage-export/
 *.firebaserc.local
@@ -53,9 +49,6 @@ Thumbs.db
 # === Optional: ignore test snapshots or coverage ===
 __snapshots__/
 coverage/
-
-# === Ignore Firebase Hosting build if building locally ===
-public/
 
 # === Ignore compiled TS if not using tsconfig.build.json ===
 *.js
