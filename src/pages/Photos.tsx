@@ -4,6 +4,7 @@ import Gallery from '../components/Gallery.tsx';
 import GalleryModal from '../components/GalleryModal.tsx';
 import Footer from '../components/Footer.tsx';
 import Navbar from '../components/Navbar.tsx';
+import ScrollToTopButton from '../components/ScrollToTopButton.tsx';
 
 const photos = [
   '/gallery/01.webp',
@@ -65,6 +66,7 @@ export default function Photos() {
       </main>
       {currentIndex === null && (
         <div className="w-full mt-12">
+          <ScrollToTopButton />
           <Footer />
         </div>
       )}

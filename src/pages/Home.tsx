@@ -12,6 +12,7 @@ import Countdown from '../components/Countdown.tsx';
 import Location from '../components/Location.tsx';
 import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.tsx';
+import ScrollToTopButton from '../components/ScrollToTopButton.tsx';
 
 interface HomeProps {
   guests: Guest[];
@@ -68,7 +69,9 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
 
       <Countdown />
 
-      <Location />
+      <section id="ceremony">
+        <Location />
+      </section>
 
       <div id="gifts" className="max-w-2xl mx-auto p-3">
         
@@ -92,12 +95,16 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
           </button>
         </section>
 
-        <PresenceForm onSubmit={(name) => {
-          const newGuest = { name };
-          setGuests([...guests, newGuest]);
-          setGuest(newGuest);
-        }} />
+        <section id="confirmed">
+          <PresenceForm onSubmit={(name) => {
+            const newGuest = { name };
+            setGuests([...guests, newGuest]);
+            setGuest(newGuest);
+          }} />
+        </section>
       </div>
+
+      <ScrollToTopButton />
 
       <Footer />
     </div>

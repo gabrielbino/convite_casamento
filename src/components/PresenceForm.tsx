@@ -8,7 +8,7 @@ interface PresenceFormProps {
 
 export default function PresenceForm({ onSubmit }: PresenceFormProps) {
   const [name, setName] = useState('');
-  const [confirmed, setConfirmed] = useState(true); // true = irá ao evento
+  const [confirmed, setConfirmed] = useState(true);
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
