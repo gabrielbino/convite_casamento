@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import AdminButton from './AdminButton.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AlertBox from './AlertBox.tsx';
-import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' | 'warning' } | null>(null);
-  
-  const location = useLocation();
 
   const isSpecialPage = ['/gifts', '/photos', '/admin'].includes(location.pathname);
 
@@ -24,13 +22,20 @@ export default function Navbar() {
 
   const menuItems = [
     { href: '/', label: 'INÍCIO' },
-    { href: '/gifts', label: 'PRESENTES' },
-    { href: '/ceremony', label: 'CERIMÔNIA' },
-    { href: '/confirmed', label: 'CONFIRMAÇÃO' },
+    { href: '#gifts', label: 'PRESENTES' },
+    { href: '#ceremony', label: 'CERIMÔNIA' },
+    { href: '#confirmed', label: 'CONFIRMAÇÃO' },
     { href: '/photos', label: 'GALERIA' },
   ];
 
-  const handleAdminAccess = (password) => {
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleAdminAccess = (password: string) => {
     if (password === process.env.REACT_APP_ADMIN_PASSWORD) {
       localStorage.setItem('isAdmin', 'true');
       navigate('/admin');
@@ -59,15 +64,35 @@ export default function Navbar() {
       {/* Desktop Menu */}
       <div className="hidden md:flex gap-6 items-center">
         {menuItems.map(({ href, label }) => (
-          <Link
+          <button
             key={href}
-            to={href}
+            onClick={() => {
+              setIsOpen(false);
+
+              if (href === '/') {
+                if (location.pathname !== '/') {
+                  navigate('/');
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              } else if (href.startsWith('#')) {
+                const id = href.slice(1);
+                if (location.pathname !== '/') {
+                  navigate('/');
+                  setTimeout(() => scrollToSection(id), 300);
+                } else {
+                  scrollToSection(id);
+                }
+              } else {
+                navigate(href);
+              }
+            }}
             className="hover:text-white hover:bg-[#9CB983] hover:rounded transition text-sm font-medium px-4 py-2"
           >
             {label}
-          </Link>
+          </button>
         ))}
-        <AdminButton onLogin={handleAdminAccess}/>
+        <AdminButton onLogin={handleAdminAccess} />
         {alert && <AlertBox message={alert.message} type={alert.type} />}
       </div>
 
@@ -97,13 +122,32 @@ export default function Navbar() {
         <ul className="flex flex-col p-4 gap-4 text-[#426221] font-medium">
           {menuItems.map(({ href, label }) => (
             <li key={href}>
-              <Link
-                to={href}
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+
+                  if (href === '/') {
+                    if (location.pathname !== '/') {
+                      navigate('/');
+                    } else {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  } else if (href.startsWith('#')) {
+                    const id = href.slice(1);
+                    if (location.pathname !== '/') {
+                      navigate('/');
+                      setTimeout(() => scrollToSection(id), 300);
+                    } else {
+                      scrollToSection(id);
+                    }
+                  } else {
+                    navigate(href);
+                  }
+                }}
                 className="hover:bg-[#9CB983] px-4 py-2 rounded"
               >
                 {label}
-              </Link>
+              </button>
             </li>
           ))}
           <li className="mt-4">
