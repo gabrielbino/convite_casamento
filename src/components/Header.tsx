@@ -23,7 +23,7 @@ export default function Header({
   return (
     <header
       className="relative min-h-[60vh] sm:min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-center justify-center sm:justify-start px-4 sm:px-12 text-white rounded-b-xl"
-      style={{ backgroundImage: `url(${isMobile ? '/mobile.jpg' : '/desktop.jpg'})` }}
+      style={{ backgroundImage: `url(${isMobile ? '/mobile.webp' : '/desktop.webp'})` }}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-0" />
 

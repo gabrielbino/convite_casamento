@@ -1,8 +1,10 @@
 import React from 'react';
-import GiftList from '../components/GiftList.tsx';
 import { Gift, Guest } from '../types/index.ts';
+
+import GiftList from '../components/GiftList.tsx';
 import Navbar from '../components/Navbar.tsx';
 import PixSection from '../components/PixSection.tsx';
+import Footer from '../components/Footer.tsx';
 
 interface Props {
   guest: Guest | null;
@@ -16,6 +18,7 @@ export default function FullGiftList({ guest, gifts, setGifts }: Props) {
       <Navbar />
       <PixSection pixKey="27992342095" />
       <GiftList guest={guest} gifts={gifts} setGifts={setGifts} />
+      <Footer />
     </main>
   );
 }

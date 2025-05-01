@@ -11,6 +11,16 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' | 'warning' } | null>(null);
+  
+  const location = useLocation();
+
+  const isSpecialPage = ['/gifts', '/photos', '/admin'].includes(location.pathname);
+
+  const navbarClass = isSpecialPage
+    ? 'bg-white text-[#354B25] shadow'
+    : isScrolled && !isMobile
+      ? 'bg-white shadow text-[#354B25]'
+      : 'bg-transparent text-white';
 
   const menuItems = [
     { href: '/', label: 'INÍCIO' },
@@ -45,11 +55,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 sm:px-12 py-3 flex items-center justify-between ${
-          isScrolled && !isMobile ? 'bg-white shadow text-[#354B25]' : 'bg-transparent text-white'
-        }`}
-    >
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 sm:px-12 py-3 flex items-center justify-between ${navbarClass}`}>
       {/* Desktop Menu */}
       <div className="hidden md:flex gap-6 items-center">
         {menuItems.map(({ href, label }) => (

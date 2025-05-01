@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
+
 import Gallery from '../components/Gallery.tsx';
 import GalleryModal from '../components/GalleryModal.tsx';
+import Footer from '../components/Footer.tsx';
+import Navbar from '../components/Navbar.tsx';
 
 const photos = [
-  '/gallery/01.jpg',
-  '/gallery/02.jpg',
-  '/gallery/03.jpg',
-  '/gallery/04.jpg',
-  '/gallery/05.jpg',
-  '/gallery/06.jpg',
-  '/gallery/07.jpg',
-  '/gallery/08.jpg',
-  '/gallery/09.jpg',
-  '/gallery/10.jpg',
-  '/gallery/11.jpg',
-  '/gallery/12.jpg',
-  '/gallery/13.jpg',
-  '/gallery/14.jpg',
-  '/gallery/15.jpg',
+  '/gallery/01.webp',
+  '/gallery/02.webp',
+  '/gallery/03.webp',
+  '/gallery/04.webp',
+  '/gallery/05.webp',
+  '/gallery/06.webp',
+  '/gallery/07.webp',
+  '/gallery/08.webp',
+  '/gallery/09.webp',
+  '/gallery/10.webp',
+  '/gallery/11.webp',
+  '/gallery/12.webp',
+  '/gallery/13.webp',
+  '/gallery/14.webp',
+  '/gallery/15.webp',
 ];
 
 export default function Photos() {
@@ -42,18 +45,29 @@ export default function Photos() {
   const next = () => setCurrentIndex((prev) => (prev! + 1) % photos.length);
 
   return (
-    <main className="pt-24 px-4 max-w-5xl mx-auto">
-      <h1 id="photos" className="text-2xl text-center md:text-3xl font-serif tracking-wide mb-8 text-[#354B25]">GALERIA DE FOTOS</h1>
-      <Gallery images={photos} onImageClick={openModal} />
-      {currentIndex !== null && (
-        <GalleryModal
-          images={photos}
-          currentIndex={currentIndex}
-          onClose={closeModal}
-          onPrev={prev}
-          onNext={next}
-        />
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+
+      <main className="pt-24 px-4 max-w-5xl mx-auto">
+        <h1 id="photos" className="text-2xl text-center md:text-3xl font-serif tracking-wide mb-8 text-[#354B25]">GALERIA DE FOTOS</h1>
+
+        <Gallery images={photos} onImageClick={openModal} />
+
+        {currentIndex !== null && (
+          <GalleryModal
+            images={photos}
+            currentIndex={currentIndex}
+            onClose={closeModal}
+            onPrev={prev}
+            onNext={next}
+          />
+        )}
+      </main>
+      {currentIndex === null && (
+        <div className="w-full mt-12">
+          <Footer />
+        </div>
       )}
-    </main>
+    </div>
   );
 }

@@ -62,7 +62,7 @@ export default function Home({ guests, setGuests, gifts, setGifts }: HomeProps) 
 
       <section className="bg-white text-center py-8 px-4">
         <p className="max-w-2xl mx-auto text-[#354B25] text-lg">
-          Este site foi feito com carinho para compartilharmos com vocês cada detalhe do nosso grande dia. Estamos muito felizes e contamos com a presença de todos no nosso grande dia!
+          Este site foi feito com carinho para compartilharmos com você cada detalhe do nosso grande dia. Estamos muito felizes e contamos com sua presença nesse dia especial!
         </p>
       </section>
 

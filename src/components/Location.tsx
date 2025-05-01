@@ -5,7 +5,7 @@ export default function Location() {
     <section className="px-4 py-12 text-center bg-white">
       <h2 className="text-2xl md:text-3xl font-serif tracking-wide mb-6 text-[#354B25]">CERIMÔNIA</h2>
       <p className="text-gray-700 max-w-2xl mx-auto mb-6 text-lg leading-relaxed">
-        Gostaríamos muito de contar com a presença de todos vocês no momento em que nossa união será abençoada diante de Deus! Dia 07 de junho de 2025, às 16h. Chácara Timoneiro - Serra, Espírito Santo.
+        Gostaríamos muito de contar com sua presença no momento em que nossa união será abençoada diante de Deus! Dia 07 de junho de 2025, às 16h. Chácara Timoneiro - Serra, Espírito Santo.
       </p>
 
       <div className="flex justify-center">
