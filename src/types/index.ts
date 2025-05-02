@@ -1,5 +1,7 @@
 export interface Guest {
   name: string;
+  confirmed: boolean;
+  children?: number;
 }
 
 export interface Gift {

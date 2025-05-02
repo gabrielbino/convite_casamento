@@ -9,7 +9,6 @@ interface PresenceFormProps {
 export default function PresenceForm({ onSubmit }: PresenceFormProps) {
   const [name, setName] = useState('');
   const [confirmed, setConfirmed] = useState(true);
-  const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
@@ -22,11 +21,10 @@ export default function PresenceForm({ onSubmit }: PresenceFormProps) {
     }
 
     try {
-      await saveGuest(name, confirmed, undefined, undefined, adults, children);
+      await saveGuest(name, confirmed, undefined, undefined, children);
       onSubmit(name);
       setAlert({ message: 'Presença registrada com sucesso!', type: 'success' });
       setName('');
-      setAdults(1);
       setChildren(0);
 
       setTimeout(() => setAlert(null), 3000);
@@ -73,21 +71,6 @@ export default function PresenceForm({ onSubmit }: PresenceFormProps) {
               não
             </label>
           </div>
-        </div>
-
-        <div className="text-left">
-          <label className="block mb-1 font-medium">
-            Quantidade de adultos incluindo você
-          </label>
-          <select
-            value={adults}
-            onChange={(e) => setAdults(Number(e.target.value))}
-            className="w-full border border-[#9CB983] rounded px-4 py-2 text-gray-800 bg-white"
-          >
-            {Array.from({ length: 6 }, (_, i) => i + 1).map((n) => (
-              <option key={n} value={n}>{n}</option>
-            ))}
-          </select>
         </div>
 
         <div className="text-left">

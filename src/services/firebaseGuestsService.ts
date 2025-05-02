@@ -7,7 +7,6 @@ export async function saveGuest(
   confirmed: boolean,
   giftName?: string,
   giftId?: number,
-  adults: number = 1,
   children: number = 0,
   allowMultiple?: boolean
 ): Promise<void> {
@@ -32,7 +31,6 @@ export async function saveGuest(
       confirmed,
       gift: giftName || null,
       giftId: giftId || null,
-      adults,
       children,
       timestamp: new Date()
     };
