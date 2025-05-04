@@ -6,10 +6,12 @@ interface GuestEntry {
   name: string;
   confirmed: boolean;
   gift?: string;
+  children?: number;
 }
 
 export default function AdminPanel() {
   const [guests, setGuests] = useState<GuestEntry[]>([]);
+  const notGoingGuests = guests.filter(g => g.confirmed === false);
   
   useEffect(() => {
     const q = query(collection(db, 'guests'), orderBy('timestamp', 'desc'));
@@ -34,9 +36,10 @@ export default function AdminPanel() {
           <p className="text-gray-600">Nenhuma confirmação ainda.</p>
         ) : (
           <ul className="list-disc pl-6 text-gray-700 text-sm space-y-1">
-            {confirmedGuests.map((g) => (
-              <li>
-                {g.name} 
+            {confirmedGuests.map((g, i) => (
+              <li key={i}>
+                {g.name}
+                {typeof g.children === 'number' && g.children > 0 && ` — ${g.children} criança(s)`}
               </li>
             ))}
           </ul>

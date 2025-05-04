@@ -90,7 +90,7 @@ export default function PresenceForm({ onSubmit }: PresenceFormProps) {
           type="submit"
           className="bg-[#426221] hover:bg-[#6CBD46] text-white font-semibold px-6 py-2 rounded transition w-full"
         >
-          Confirmar presença
+          Confirmar
         </button>
       </form>
 
