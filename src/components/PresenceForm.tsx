@@ -11,6 +11,7 @@ export default function PresenceForm({ onSubmit }: PresenceFormProps) {
   const [confirmed, setConfirmed] = useState(true);
   const [children, setChildren] = useState(0);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const CONFIRMACAO_ATIVA = false;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,19 +87,27 @@ export default function PresenceForm({ onSubmit }: PresenceFormProps) {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="bg-[#426221] hover:bg-[#6CBD46] text-white font-semibold px-6 py-2 rounded transition w-full"
-        >
-          Confirmar
-        </button>
+       {CONFIRMACAO_ATIVA ? (
+          <button
+            type="submit"
+            className="bg-[#426221] hover:bg-[#6CBD46] text-white font-semibold px-6 py-2 rounded transition w-full"
+          >
+            Confirmar presença
+          </button>
+        ) : (
+          <div>
+            <p className="text-red-600 font-medium mb-2">
+              O número máximo de convidados foi atingido.
+            </p>
+            <button
+              disabled
+              className="bg-gray-400 text-white font-semibold px-6 py-2 rounded w-full cursor-not-allowed"
+            >
+              Confirmação encerrada
+            </button>
+          </div>
+        )}
       </form>
-
-      {alert && (
-        <div className="mt-4">
-          <AlertBox message={alert.message} type={alert.type} />
-        </div>
-      )}
     </section>
   );
 }
