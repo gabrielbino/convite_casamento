@@ -26,9 +26,19 @@ export default function AdminPanel() {
   const confirmedGuests = guests.filter(g => g.confirmed);
   const giftedGuests = guests.filter(g => g.gift);
 
+  const totalAdults = confirmedGuests.length;
+  const totalChildren = confirmedGuests.reduce((sum, g) => sum + (g.children || 0), 0);
+  const totalGuests = totalAdults + totalChildren;
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6 text-center">Painel do Admin 👑</h1>
+
+      <div className="mb-6 text-sm text-gray-600">
+        <p><strong>Adultos confirmados:</strong> {totalAdults}</p>
+        <p><strong>Crianças confirmadas:</strong> {totalChildren}</p>
+        <p><strong>Total de convidados:</strong> {totalGuests}</p>
+      </div>
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Convidados confirmados</h2>
