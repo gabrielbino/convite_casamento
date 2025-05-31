@@ -4,17 +4,17 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
 
-  apiKey: "AIzaSyD_-UC718DVG5_XQ6A7bCM_XoHXgmwC2ug",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 
-  authDomain: "convite-casamento-52dea.firebaseapp.com",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
 
-  projectId: "convite-casamento-52dea",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
 
-  storageBucket: "convite-casamento-52dea.firebasestorage.app",
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
 
-  messagingSenderId: "465958068873",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 
-  appId: "1:465958068873:web:963bd52fdbdbb097cf9c58"
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 
 };
 
